@@ -1,6 +1,6 @@
 const { createPool, sql } = require('slonik');
 
-const pool = createPool('postgres://postgres:levi007@localhost:5432/chatdb');
+const pool = createPool(process.env.DATABASE_URL);
 
 (async function () {
   await pool.transaction(async transactionConnection => {
