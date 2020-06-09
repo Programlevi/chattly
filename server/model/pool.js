@@ -32,7 +32,7 @@ const pool = createPool('postgres://postgres:levi007@localhost:5432/chatdb');
             "message" VARCHAR(50) NOT NULL,
             "author" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
             "recipient" UUID REFERENCES "userAccount"(id) ON DELETE CASCADE,
-            "channel" UUID REFERENCES "channel" ON DELETE CASCADE,
+            "channel" UUID REFERENCES "channel"(id) ON DELETE CASCADE,
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             UNIQUE("createdAt")
         );`);
