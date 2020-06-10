@@ -16,7 +16,8 @@ const pool = createPool(process.env.DATABASE_URL);
             "photo" VARCHAR(120) NOT NULL DEFAULT 'default.jpg',
             "passChangedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE("email", "userName")
+            UNIQUE("userName"),
+            UNIQUE("email")
         );`);
 
     await transactionConnection.query(sql`CREATE TABLE IF NOT EXISTS "channel" (
