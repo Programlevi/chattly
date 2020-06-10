@@ -23,6 +23,15 @@ class Entity {
     return res.rows;
   }
 
+  async findOne(condition) {
+    if (!isObject(condition))
+      throw new Error(
+        'Invalid input: condition must be object and cannot be null'
+      );
+    const res = await this.find(condition);
+    return res[0] ? res[0] : null;
+  }
+
   async add(records) {
     if (!Array.isArray(records))
       throw new Error('Invalid input: must be an array of records');
@@ -37,6 +46,15 @@ class Entity {
     );
 
     return res.rows;
+  }
+
+  async addOne(record) {
+    if (!isObject(condition))
+      throw new Error(
+        'Invalid input: condition must be object and cannot be null'
+      );
+    const res = await this.add([record]);
+    return res[0] ? res[0] : null;
   }
 
   async update(data, condition = true) {
@@ -61,6 +79,16 @@ class Entity {
     return res.rows;
   }
 
+  async updateOne(data, condition) {
+    if (!isObject(data)) throw new Error('Invalid input: data must be object');
+    if (!isObject(condition))
+      throw new Error(
+        'Invalid input: condition must be object and cannot be null'
+      );
+    const res = await this.update(data, condition);
+    return res[0] ? res[0] : null;
+  }
+
   async delete(condition = true) {
     if (!isObject(condition) && condition !== true) {
       throw new Error(
@@ -77,6 +105,15 @@ class Entity {
     );
 
     return res.rows;
+  }
+
+  async deleteOne(condition) {
+    if (!isObject(condition))
+      throw new Error(
+        'Invalid input: condition must be object and cannot be null'
+      );
+    const res = await this.delete(condition);
+    return res[0] ? res[0] : null;
   }
 
   _generateColumnValuePairs(obj, glue) {
