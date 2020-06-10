@@ -49,7 +49,7 @@ class Entity {
   }
 
   async addOne(record) {
-    if (!isObject(condition))
+    if (!isObject(record))
       throw new Error(
         'Invalid input: condition must be object and cannot be null'
       );
