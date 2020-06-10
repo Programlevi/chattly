@@ -13,6 +13,7 @@ const pool = createPool(process.env.DATABASE_URL);
             "userName" VARCHAR(50) NOT NULL,
             "email" VARCHAR(120) NOT NULL,
             "password" VARCHAR(60) NOT NULL,
+            "role" VARCHAR(10) NOT NULL DEFAULT 'user',
             "photo" VARCHAR(120) NOT NULL DEFAULT 'default.jpg',
             "passChangedAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
