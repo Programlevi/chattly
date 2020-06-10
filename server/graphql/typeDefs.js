@@ -5,6 +5,7 @@ module.exports = gql`
     id: ID!
     userName: String!
     email: String!
+    role: UserRoleEnum!
     photo: String!
     createdAt: String!
   }
@@ -22,6 +23,11 @@ module.exports = gql`
     message: String!
     author: User!
     createdAt: String!
+  }
+
+  enum UserRoleEnum {
+    user
+    admin
   }
 
   input getUserInput {
