@@ -20,7 +20,7 @@ const pool = createPool(process.env.DATABASE_URL);
             UNIQUE("email")
         );`);
 
-    await transactionConnection.query(sql`CREATE TABLE IF NOT EXISTS "channel" (
+    await transactionConnection.query(sql`CREATE TABLE IF NOT EXISTS "chatRoom" (
             "id" UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
             "topic" VARCHAR(50) NOT NULL,
             "admin" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
@@ -33,7 +33,7 @@ const pool = createPool(process.env.DATABASE_URL);
             "message" VARCHAR(50) NOT NULL,
             "author" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
             "recipient" UUID REFERENCES "userAccount"(id) ON DELETE CASCADE,
-            "channel" UUID REFERENCES "channel"(id) ON DELETE CASCADE,
+            "chatRoom" UUID REFERENCES "channel"(id) ON DELETE CASCADE,
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             UNIQUE("createdAt")
         );`);
