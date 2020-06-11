@@ -119,6 +119,24 @@ class Entity {
     return res.rows;
   }
 
+  async count(condition = true) {
+    if (!isObject(condition) && condition !== true)
+      throw new Error(
+        'Invalid input: condition must be object or undefined and cannot be null'
+      );
+
+    if (typeof condition !== 'boolean')
+      condition = this._generateColumnValuePairs(condition, sql` AND `);
+
+    const res = await pool.query(sql`
+      SELECT COUNT(*) FROM ${sql.identifier([
+        this.tableName
+      ])} WHERE ${condition}
+    `);
+
+    return res.rows[0].count;
+  }
+
   async deleteOne(condition) {
     if (!isObject(condition))
       throw new Error(
