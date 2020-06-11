@@ -1,6 +1,7 @@
 const userModel = require('../../model/dal/user');
 const chatRoomModel = require('../../model/dal/chatRoom');
 const messageModel = require('../../model/dal/message');
+const chatRoomRegModel = require('../../model/dal/chatRoomReg');
 
 exports.addUser = async (parent, args, context) => {
   return await userModel.addOne(args.input);
@@ -12,4 +13,9 @@ exports.addChatRoom = async (parent, args, context) => {
 
 exports.addMessage = async (parent, args, context) => {
   return await messageModel.addOne(args.input);
+};
+
+exports.joinChatRoom = async (parent, args, context) => {
+  await chatRoomRegModel.addOne(args.input);
+  return 'success';
 };

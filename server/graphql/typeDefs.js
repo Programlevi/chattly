@@ -15,6 +15,7 @@ module.exports = gql`
     topic: String!
     admin: User!
     messages: [Message]!
+    memberCount: Int!
     createdAt: String!
   }
 
@@ -71,6 +72,11 @@ module.exports = gql`
     admin: ID!
   }
 
+  input JoinChatRoomInput {
+    member: ID!
+    chatRoom: ID!
+  }
+
   input UpdateUserInput {
     userName: String
     email: String
@@ -89,5 +95,6 @@ module.exports = gql`
     addUser(input: AddUserInput!): User!
     addMessage(input: AddMessageInput!): Message!
     addChatRoom(input: AddChatRoomInput!): ChatRoom!
+    joinChatRoom(input: JoinChatRoomInput!): String!
   }
 `;
