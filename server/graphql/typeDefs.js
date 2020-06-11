@@ -30,14 +30,14 @@ module.exports = gql`
     admin
   }
 
-  input getUserInput {
+  input FilterUserInput {
     id: ID
     userName: String
     email: String
     createdAt: String
   }
 
-  input getMessageInput {
+  input FilterMessageInput {
     id: ID
     message: String
     author: ID
@@ -46,44 +46,48 @@ module.exports = gql`
     createdAt: String
   }
 
-  input getChatRoomInput {
+  input FilterChatRoomInput {
     id: ID
     topic: String
     admin: ID
     createdAt: String
   }
 
-  input addUserInput {
+  input AddUserInput {
     userName: String!
     email: String!
     password: String!
   }
 
-  input addMessageInput {
+  input AddMessageInput {
     message: String!
     author: ID!
     recipient: ID
     chatRoom: ID
   }
 
-  input addChatRoomInput {
-    message: String!
+  input AddChatRoomInput {
     topic: String!
     admin: ID!
   }
 
+  input UpdateUserInput {
+    userName: String
+    email: String
+  }
+
   type Query {
-    user(input: getUserInput!): User
-    users(input: getUserInput): [User]!
-    message(input: getMessageInput!): Message
-    messages(input: getMessageInput): [Message]!
-    chatRoom(input: getChatRoomInput!): ChatRoom
-    chatRooms(input: getChatRoomInput): [ChatRoom]!
+    user(input: FilterUserInput!): User
+    users(input: FilterUserInput): [User]!
+    message(input: FilterMessageInput!): Message
+    messages(input: FilterMessageInput): [Message]!
+    chatRoom(input: FilterChatRoomInput!): ChatRoom
+    chatRooms(input: FilterChatRoomInput): [ChatRoom]!
   }
 
   type Mutation {
-    addUser(input: addUserInput!): User!
-    addMessage(input: addMessageInput!): Message!
-    addChatRoom(input: addChatRoomInput!): ChatRoom!
+    addUser(input: AddUserInput!): User!
+    addMessage(input: AddMessageInput!): Message!
+    addChatRoom(input: AddChatRoomInput!): ChatRoom!
   }
 `;
