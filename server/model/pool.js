@@ -38,6 +38,13 @@ const pool = createPool(process.env.DATABASE_URL);
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             UNIQUE("createdAt")
         );`);
+    await transactionConnection.query(sql`CREATE TABLE IF NOT EXISTS "chatRoomReg" (
+            "id" UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
+            "member" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
+            "chatRoom" UUID REFERENCES "chatRoom"(id) ON DELETE CASCADE,
+            "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE("member", "chatRoom")
+        )`);
   });
 })();
 
