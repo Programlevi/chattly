@@ -23,6 +23,18 @@ class Entity {
     return res.rows;
   }
 
+  async findByIds(ids, columnName) {
+    const result = await pool.query(
+      sql`SELECT * FROM ${sql.identifier([
+        this.tableName
+      ])} WHERE ${sql.identifier([columnName])} = ANY(${sql.array(
+        ids,
+        'uuid'
+      )})`
+    );
+    return result.rows;
+  }
+
   async findOne(condition) {
     if (!isObject(condition))
       throw new Error(
