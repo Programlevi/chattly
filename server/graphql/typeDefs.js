@@ -30,9 +30,15 @@ module.exports = gql`
     createdAt: String
   }
 
-  input AddUserInput {
+  input SignupUserInput {
     userName: String!
     email: String!
+    password: String!
+  }
+
+  input LoginUserInput {
+    userName: String
+    email: String
     password: String!
   }
 
@@ -49,7 +55,8 @@ module.exports = gql`
   }
 
   type Mutation {
-    addUser(input: AddUserInput!): User!
+    signup(input: SignupUserInput!): User!
+    login(input: LoginUserInput!): User!
     addMessage(input: AddMessageInput!): Message!
   }
 `;
