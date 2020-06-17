@@ -28,6 +28,17 @@ exports.login = async userCred => {
   };
 };
 
+exports.verifyUser = async token => {
+  let user = null;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    user = await userModel.findOne({ id: decoded.id });
+  } catch (error) {
+    user = null;
+  }
+  return user;
+};
+
 const signjwt = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: `${process.env.JWT_EXPIRES_IN.toString()}d`

@@ -4,6 +4,7 @@ const { ApolloServer } = require('apollo-server-express');
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
+const userService = require('./services/userService');
 const dataLoaders = require('./graphql/dataLoaders');
 
 const app = express();
@@ -16,9 +17,11 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req, res }) => {
+    const user = await userService.verifyUser(req.cookies.jwt);
     return {
       req,
       res,
+      user,
       loaders: {
         messageAuthorLoader: dataLoaders.messageAuthorLoader()
       }

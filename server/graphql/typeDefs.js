@@ -44,7 +44,6 @@ module.exports = gql`
 
   input AddMessageInput {
     message: String!
-    author: ID!
   }
 
   type Query {

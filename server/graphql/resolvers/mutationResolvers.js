@@ -1,5 +1,7 @@
+const { combineResolvers } = require('graphql-resolvers');
 const messageModel = require('../../model/dal/message');
-const userService = require('../../Services/userService');
+const userService = require('../../services/userService');
+const { authenticate } = require('../middlewares/authMiddleware');
 const createJwtCookie = require('../../utils/createJwtCookie');
 
 exports.signup = async (parent, args, { res, req }) => {
@@ -14,6 +16,9 @@ exports.login = async (parent, args, { res, req }) => {
   return user;
 };
 
-exports.addMessage = async (parent, args, context) => {
-  return await messageModel.addOne(args.input);
-};
+exports.addMessage = combineResolvers(
+  authenticate,
+  async (parent, args, { user }) => {
+    return await messageModel.addOne({ ...args.input, author: user.id });
+  }
+);
