@@ -13,8 +13,6 @@ const apolloServer = new ApolloServer({
   context: async () => {
     return {
       loaders: {
-        chatRoomMessagesLoader: dataLoaders.chatRoomMessagesLoader(),
-        chatRoomAdminLoader: dataLoaders.chatRoomAdminLoader(),
         messageAuthorLoader: dataLoaders.messageAuthorLoader()
       }
     };

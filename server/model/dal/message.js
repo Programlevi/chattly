@@ -1,8 +1,3 @@
 const Entity = require('./Entity');
 
-module.exports = new Entity('message', [
-  'message',
-  'author',
-  'recipient',
-  'chatRoom'
-]);
+module.exports = new Entity('message', ['message', 'author']);
