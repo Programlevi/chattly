@@ -51,6 +51,7 @@ module.exports = gql`
     users(input: FilterUserInput): [User]!
     message(input: FilterMessageInput!): Message
     messages(input: FilterMessageInput): [Message]!
+    me: User!
   }
 
   type Mutation {
