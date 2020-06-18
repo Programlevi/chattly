@@ -16,6 +16,11 @@ exports.login = async (parent, args, { res, req }) => {
   return user;
 };
 
+exports.logout = async (parent, args, { res, req }) => {
+  createJwtCookie(res, req, 'Logged Out');
+  return 'Success';
+};
+
 exports.addMessage = combineResolvers(
   authenticate,
   async (parent, args, { user }) => {

@@ -57,6 +57,7 @@ module.exports = gql`
   type Mutation {
     signup(input: SignupUserInput!): User!
     login(input: LoginUserInput!): User!
+    logout: String!
     addMessage(input: AddMessageInput!): Message!
   }
 `;
