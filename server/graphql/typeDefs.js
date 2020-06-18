@@ -9,6 +9,11 @@ module.exports = gql`
     createdAt: String!
   }
 
+  type UserAuth {
+    user: User!
+    token: String!
+  }
+
   type Message {
     id: ID!
     message: String!
@@ -55,9 +60,13 @@ module.exports = gql`
   }
 
   type Mutation {
-    signup(input: SignupUserInput!): User!
-    login(input: LoginUserInput!): User!
+    signup(input: SignupUserInput!): UserAuth!
+    login(input: LoginUserInput!): UserAuth!
     logout: String!
     addMessage(input: AddMessageInput!): Message!
+  }
+
+  type Subscription {
+    messageAdded: Message!
   }
 `;

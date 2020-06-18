@@ -1,9 +1,14 @@
 require('dotenv').config({ path: './config.env' });
 
-const app = require('./app');
+const { httpServer, apolloServer } = require('./app');
 
 const port = process.env.PORT;
 
-const server = app.listen(port, () => {
-  console.log(`Running at port ${port}`);
+httpServer.listen(port, () => {
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+  );
+  console.log(
+    `🚀 Subscriptions ready at ws://localhost:${port}${apolloServer.subscriptionsPath}`
+  );
 });
