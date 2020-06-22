@@ -1,5 +1,4 @@
 <script>
-    import RoutifyIntro from './example/_components/RoutifyIntro.svelte'
+  import { goto } from "@sveltech/routify";
+  $goto("../chat");
 </script>
-
-<RoutifyIntro />
