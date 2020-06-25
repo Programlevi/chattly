@@ -1,7 +1,7 @@
 const { combineResolvers } = require('graphql-resolvers');
 const userModel = require('../../model/dal/user');
 const messageModel = require('../../model/dal/message');
-const { authenticate } = require('../middlewares/authMiddleware');
+// const { authenticate } = require('../middlewares/authMiddleware');
 
 exports.user = async (parent, args, context) => {
   return await userModel.findOne(args.input);
@@ -19,6 +19,6 @@ exports.messages = async (parent, args, context) => {
   return await messageModel.find(args.input);
 };
 
-exports.me = combineResolvers(authenticate, async (parent, args, { user }) => {
+exports.me = async (parent, args, { user }) => {
   return user;
-});
+};
