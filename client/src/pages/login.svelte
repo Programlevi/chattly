@@ -1,13 +1,37 @@
 <script>
-  import { url } from '@sveltech/routify';
+  import { tick } from 'svelte';
+  import { url, goto } from '@sveltech/routify';
+  import { mutate, getClient } from 'svelte-apollo';
+  import { LOGIN_USER, AUTH_USER } from '../queries.js';
+
   let loginDetails = {
     email: '',
     password: ''
   };
+
+  let client = getClient();
+
+  async function handleSubmit() {
+    await mutate(client, {
+      mutation: LOGIN_USER,
+      variables: {
+        input: loginDetails
+      },
+      update(cache, { data: { login } }) {
+        cache.writeQuery({
+          query: AUTH_USER,
+          data: {
+            me: login.user
+          }
+        });
+      }
+    });
+    $goto('../chat');
+  }
 </script>
 
 <main class="auth-page">
-  <form class="auth-form" on:submit|preventDefault>
+  <form class="auth-form" on:submit|preventDefault={handleSubmit}>
     <h1 class="form-heading">Log in to your account</h1>
 
     <div class="form-group">

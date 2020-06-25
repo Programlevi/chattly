@@ -4,7 +4,10 @@
   import { Router } from '@sveltech/routify';
   import { routes } from '@sveltech/routify/tmp/routes';
 
-  const client = new ApolloClient({ uri: 'http://localhost:3000/graphql' });
+  const client = new ApolloClient({
+    uri: 'http://localhost:3000/graphql',
+    credentials: 'include'
+  });
   setClient(client);
 </script>
 

@@ -1,15 +1,36 @@
 <script>
-  import { url } from '@sveltech/routify';
+  import { url, goto } from '@sveltech/routify';
+  import { mutate, getClient } from 'svelte-apollo';
+
+  import { SIGNUP_USER } from '../queries.js';
+
   let signupDetails = {
     userName: '',
     email: '',
-    password: '',
-    passwordConfirm: ''
+    password: ''
   };
+
+  async function signup() {
+    await mutate(getClient(), {
+      mutation: SIGNUP_USER,
+      variables: {
+        input: signupDetails
+      },
+      update(cache, { data: { signup } }) {
+        cache.writeQuery({
+          query: AUTH_USER,
+          data: {
+            me: signup.user
+          }
+        });
+      }
+    });
+    $goto('../chat');
+  }
 </script>
 
 <main class="auth-page">
-  <form class="auth-form" on:submit|preventDefault>
+  <form class="auth-form" on:submit|preventDefault={signup}>
     <h1 class="form-heading">Create a new account</h1>
 
     <div class="form-group">
@@ -47,7 +68,7 @@
       />
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="passwordConfirm">Confirm Password</label>
       <input
         type="password"
@@ -56,7 +77,7 @@
         placeholder="Retype your password"
         bind:value={signupDetails.passwordConfirm}
       />
-    </div>
+    </div> -->
 
     <div class="form-group">
       <button>Sign Up</button>

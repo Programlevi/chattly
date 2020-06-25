@@ -1,21 +1,24 @@
 <script>
-  import { goto } from '@sveltech/routify';
+  import { query, getClient } from 'svelte-apollo';
   import { AUTH_USER } from '../queries';
   import { ScaleOut } from 'svelte-loading-spinners';
-  import query from '../utils/query.js';
 
-  let authStore = query(AUTH_USER);
+  const client = getClient();
 
-  $: ({ loading, data, error } = $authStore);
+  const promise = query(client, {
+    query: AUTH_USER
+  });
 </script>
 
-{#if loading}
+{#await $promise}
   <div>
     <ScaleOut color="#108be3" size="10" unit="rem" />
   </div>
-{:else}
-  <slot scoped={{ data }} />
-{/if}
+{:then res}
+  <slot scoped={{ user: res.data.me }} />
+{:catch}
+  <slot />
+{/await}
 
 <style>
   div {
