@@ -1,7 +1,8 @@
 <script>
-  import { tick } from 'svelte';
   import { url, goto } from '@sveltech/routify';
-  import { mutate, getClient } from 'svelte-apollo';
+  import { FormField, Input, Button } from './_components/shared';
+  import AuthPage from './_components/AuthPage.svelte';
+  import { mutate } from '../utils/apolloUtils.js';
   import { LOGIN_USER, AUTH_USER } from '../queries.js';
 
   let loginDetails = {
@@ -9,11 +10,8 @@
     password: ''
   };
 
-  let client = getClient();
-
   async function handleSubmit() {
-    await mutate(client, {
-      mutation: LOGIN_USER,
+    await mutate(LOGIN_USER, {
       variables: {
         input: loginDetails
       },
@@ -30,13 +28,14 @@
   }
 </script>
 
-<main class="auth-page">
-  <form class="auth-form" on:submit|preventDefault={handleSubmit}>
-    <h1 class="form-heading">Log in to your account</h1>
+<AuthPage>
 
-    <div class="form-group">
+  <span slot="heading">Log in to your account</span>
+  <form on:submit|preventDefault={handleSubmit} slot="form">
+
+    <FormField>
       <label for="email">Email Address</label>
-      <input
+      <Input
         type="email"
         id="email"
         name="email"
@@ -44,28 +43,26 @@
         autocomplete="off"
         bind:value={loginDetails.email}
       />
-    </div>
+    </FormField>
 
-    <div class="form-group">
+    <FormField>
       <label for="password">Password</label>
-      <input
+      <Input
         type="password"
         id="password"
         name="password"
         placeholder="Enter your password"
         bind:value={loginDetails.password}
       />
-    </div>
+    </FormField>
 
-    <div class="form-group">
-      <button>Log in</button>
-    </div>
-
-    <div class="form-group">
-      <p class="alternate-auth">
-        Don't have an account?
-        <a href={$url('../signup')}>Sign up here</a>
-      </p>
-    </div>
+    <FormField>
+      <Button>Log in</Button>
+    </FormField>
   </form>
-</main>
+
+  <span slot="altAuthLink">
+    Don't have an account?
+    <a href={$url('../signup')}>Sign up here</a>
+  </span>
+</AuthPage>

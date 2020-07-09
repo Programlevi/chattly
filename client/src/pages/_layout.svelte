@@ -1,22 +1,18 @@
 <script>
-  import { query, getClient } from 'svelte-apollo';
   import { AUTH_USER } from '../queries';
   import { ScaleOut } from 'svelte-loading-spinners';
+  import { query } from '../utils/apolloUtils.js';
 
-  const client = getClient();
-
-  const promise = query(client, {
-    query: AUTH_USER
-  });
+  let promise = query(AUTH_USER);
 </script>
 
 {#await $promise}
   <div>
     <ScaleOut color="#108be3" size="10" unit="rem" />
   </div>
-{:then res}
-  <slot scoped={{ user: res.data.me }} />
-{:catch}
+{:then {data}}
+  <slot scoped={{ user: data.me }} />
+{:catch error}
   <slot />
 {/await}
 
@@ -25,6 +21,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100%;
   }
 </style>

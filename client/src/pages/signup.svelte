@@ -1,7 +1,8 @@
 <script>
   import { url, goto } from '@sveltech/routify';
-  import { mutate, getClient } from 'svelte-apollo';
-
+  import { FormField, Input, Button } from './_components/shared';
+  import AuthPage from './_components/AuthPage.svelte';
+  import { mutate } from '../utils/apolloUtils.js';
   import { SIGNUP_USER } from '../queries.js';
 
   let signupDetails = {
@@ -11,8 +12,7 @@
   };
 
   async function signup() {
-    await mutate(getClient(), {
-      mutation: SIGNUP_USER,
+    await mutate(SIGNUP_USER, {
       variables: {
         input: signupDetails
       },
@@ -29,13 +29,13 @@
   }
 </script>
 
-<main class="auth-page">
-  <form class="auth-form" on:submit|preventDefault={signup}>
-    <h1 class="form-heading">Create a new account</h1>
+<AuthPage>
+  <span slot="heading">Create a new account</span>
 
-    <div class="form-group">
+  <form on:submit|preventDefault={signup} slot="form">
+    <FormField>
       <label for="userName">Username</label>
-      <input
+      <Input
         type="text"
         id="userName"
         name="userName"
@@ -43,11 +43,11 @@
         autocomplete="off"
         bind:value={signupDetails.userName}
       />
-    </div>
+    </FormField>
 
-    <div class="form-group">
+    <FormField class="form-group">
       <label for="email">Email Address</label>
-      <input
+      <Input
         type="eamil"
         id="email"
         name="email"
@@ -55,39 +55,31 @@
         autocomplete="off"
         bind:value={signupDetails.email}
       />
-    </div>
+    </FormField>
 
-    <div class="form-group">
+    <FormField class="form-group">
       <label for="password">Password</label>
-      <input
+      <Input
         type="password"
         id="password"
         name="password"
         placeholder="Enter your password"
         bind:value={signupDetails.password}
       />
-    </div>
+    </FormField>
 
-    <!-- <div class="form-group">
-      <label for="passwordConfirm">Confirm Password</label>
-      <input
-        type="password"
-        id="passwordConfirm"
-        name="passwordConfirm"
-        placeholder="Retype your password"
-        bind:value={signupDetails.passwordConfirm}
-      />
-    </div> -->
+    <FormField class="form-group">
+      <Button>Sign Up</Button>
+    </FormField>
 
-    <div class="form-group">
-      <button>Sign Up</button>
-    </div>
-
-    <div class="form-group">
-      <p class="alternate-auth">
-        Already have an account?
-        <a href={$url('../login')}>Log in here</a>
-      </p>
-    </div>
   </form>
-</main>
+
+  <span slot="altAuthLink">
+    Already have an account?
+    <a href={$url('../login')}>Log in here</a>
+  </span>
+</AuthPage>
+
+<style>
+
+</style>

@@ -1,0 +1,51 @@
+:root {
+  --main-color: #108be3;
+
+  --bg-color-1: #fff;
+  --bg-color-2: #f7f7f7;
+  --bg-color-3: #444;
+
+  --font-color-1: #fff;
+  --font-color-2: #777;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--font-color-2);
+  font-size: 1.6rem;
+  font-weight: 300;
+  background-color: var(--bg-color-2);
+  font-family: 'Lato', 'Arial', sans-serif;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#routify-app {
+  height: 100%;
+}
+
+header {
+  position: absolute;
+  height: 6.3rem;
+  width: 100%;
+  background-color: var(--bg-color-3);
+  color: var(--font-color-1);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+a {
+  color: var(--main-color);
+  text-decoration: none;
+}
