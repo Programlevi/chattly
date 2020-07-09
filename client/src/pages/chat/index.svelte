@@ -11,9 +11,7 @@
     <div class="chat-box-container">
       <div class="chat-box">
         <p class="name">Levi</p>
-        <p class="message">
-          How do you do?
-        </p>
+        <p class="message">How do you do?</p>
       </div>
     </div>
   </div>

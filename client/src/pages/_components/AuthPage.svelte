@@ -45,4 +45,49 @@
     margin-top: 2.5rem;
     font-size: 1.2rem;
   }
+
+  main :global(.form-field) {
+    margin-bottom: 2.5rem;
+  }
+
+  main :global(label) {
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  main :global(input) {
+    display: block;
+    color: inherit;
+    padding: 1.25rem 1.75rem;
+    width: 100%;
+    background-color: var(--bg-color-2);
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  main :global(input:focus) {
+    outline: none;
+    border-bottom-color: var(--main-color);
+  }
+
+  main :global(button) {
+    color: #fff;
+    padding: 1.4rem 3rem;
+    font-weight: 400;
+    font-size: 1.6rem;
+    font-family: inherit;
+    border: none;
+    border-radius: 2px;
+    text-transform: uppercase;
+    background-color: var(--main-color);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  main :global(button:hover),
+  main :global(button:active) {
+    box-shadow: rgba(0, 0, 0, 0.149) 0px 0.5rem 1rem;
+  }
 </style>

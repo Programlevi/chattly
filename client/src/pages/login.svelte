@@ -1,6 +1,5 @@
 <script>
   import { url, goto } from '@sveltech/routify';
-  import { FormField, Input, Button } from './_components/shared';
   import AuthPage from './_components/AuthPage.svelte';
   import { mutate } from '../utils/apolloUtils.js';
   import { LOGIN_USER, AUTH_USER } from '../queries.js';
@@ -29,13 +28,13 @@
 </script>
 
 <AuthPage>
-
   <span slot="heading">Log in to your account</span>
+
   <form on:submit|preventDefault={handleSubmit} slot="form">
 
-    <FormField>
+    <div class="form-field">
       <label for="email">Email Address</label>
-      <Input
+      <input
         type="email"
         id="email"
         name="email"
@@ -43,22 +42,21 @@
         autocomplete="off"
         bind:value={loginDetails.email}
       />
-    </FormField>
+    </div>
 
-    <FormField>
+    <div class="form-field">
       <label for="password">Password</label>
-      <Input
+      <input
         type="password"
         id="password"
         name="password"
         placeholder="Enter your password"
         bind:value={loginDetails.password}
       />
-    </FormField>
+    </div>
 
-    <FormField>
-      <Button>Log in</Button>
-    </FormField>
+    <button>Log in</button>
+
   </form>
 
   <span slot="altAuthLink">

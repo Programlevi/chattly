@@ -1,9 +1,8 @@
 <script>
   import { url, goto } from '@sveltech/routify';
-  import { FormField, Input, Button } from './_components/shared';
   import AuthPage from './_components/AuthPage.svelte';
   import { mutate } from '../utils/apolloUtils.js';
-  import { SIGNUP_USER } from '../queries.js';
+  import { SIGNUP_USER, AUTH_USER } from '../queries.js';
 
   let signupDetails = {
     userName: '',
@@ -33,9 +32,9 @@
   <span slot="heading">Create a new account</span>
 
   <form on:submit|preventDefault={signup} slot="form">
-    <FormField>
+    <div class="form-field">
       <label for="userName">Username</label>
-      <Input
+      <input
         type="text"
         id="userName"
         name="userName"
@@ -43,11 +42,11 @@
         autocomplete="off"
         bind:value={signupDetails.userName}
       />
-    </FormField>
+    </div>
 
-    <FormField class="form-group">
+    <div class="form-field">
       <label for="email">Email Address</label>
-      <Input
+      <input
         type="eamil"
         id="email"
         name="email"
@@ -55,22 +54,20 @@
         autocomplete="off"
         bind:value={signupDetails.email}
       />
-    </FormField>
+    </div>
 
-    <FormField class="form-group">
+    <div class="form-field">
       <label for="password">Password</label>
-      <Input
+      <input
         type="password"
         id="password"
         name="password"
         placeholder="Enter your password"
         bind:value={signupDetails.password}
       />
-    </FormField>
+    </div>
 
-    <FormField class="form-group">
-      <Button>Sign Up</Button>
-    </FormField>
+    <button>Sign Up</button>
 
   </form>
 
@@ -79,7 +76,3 @@
     <a href={$url('../login')}>Log in here</a>
   </span>
 </AuthPage>
-
-<style>
-
-</style>
