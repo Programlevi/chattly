@@ -19,7 +19,7 @@
         cache.writeQuery({
           query: AUTH_USER,
           data: {
-            me: signup.user
+            auth: signup
           }
         });
       }
@@ -27,6 +27,10 @@
     $goto('../chat');
   }
 </script>
+
+<svelte:head>
+  <title>Sign Up | Chattly</title>
+</svelte:head>
 
 <AuthPage>
   <span slot="heading">Create a new account</span>

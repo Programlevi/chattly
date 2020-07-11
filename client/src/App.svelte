@@ -1,4 +1,5 @@
 <script>
+  import 'emoji-picker-element';
   import ApolloClient from 'apollo-boost';
   import { setClient } from 'svelte-apollo';
   import { Router } from '@sveltech/routify';
@@ -13,9 +14,10 @@
 
 <svelte:head>
   <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap"
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Lato:400,300,100,500"
   />
+  <title>Chattly</title>
 </svelte:head>
 
 <Router {routes} />

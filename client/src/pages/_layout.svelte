@@ -4,15 +4,14 @@
   import { query } from '../utils/apolloUtils.js';
 
   let promise = query(AUTH_USER);
-  $: console.log($promise);
 </script>
 
 {#await $promise}
   <div>
     <ScaleOut color="#108be3" size="10" unit="rem" />
   </div>
-{:then {data}}
-  <slot scoped={{ user: data }} />
+{:then {data: {auth}}}
+  <slot scoped={{auth}} />
 {:catch error}
   <slot />
 {/await}

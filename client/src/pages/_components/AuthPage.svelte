@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <div class="auth-form">
+  <div>
     <h1>
       <slot name="heading" />
     </h1>
@@ -27,11 +27,8 @@
 
   h1 {
     color: var(--main-color);
-    font-weight: 500;
-    font-size: 2.25rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     margin-bottom: 3.5rem;
+    text-transform: uppercase;
   }
 
   div {

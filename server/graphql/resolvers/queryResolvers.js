@@ -19,6 +19,9 @@ exports.messages = async (parent, args, context) => {
   return await messageModel.find(args.input);
 };
 
-exports.me = async (parent, args, { user }) => {
-  return user;
+exports.auth = async (parent, args, { user, req }) => {
+  if (!user) {
+    return null;
+  }
+  return { token: req.cookies.jwt, user };
 };

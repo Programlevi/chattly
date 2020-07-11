@@ -1,31 +1,63 @@
 <script>
-  let message = '';
+  import ChatBar from '../_components/ChatBar.svelte';
 </script>
 
 <main>
   <header>
     <div class="profile-img" />
-    <p class="chat-name">Chattly</p>
+    <p class="recipient-name">Chattly</p>
   </header>
-  <div class="chat-list">
-    <div class="chat-box-container">
+  <ul class="chat-list">
+    <li class="chat-item">
       <div class="chat-box">
         <p class="name">Levi</p>
         <p class="message">How do you do?</p>
       </div>
-    </div>
-  </div>
+    </li>
+    <li class="chat-item">
+      <div class="chat-box">
+        <p class="name">Levi</p>
+        <p class="message">How do you do?</p>
+      </div>
+    </li>
+    <li class="chat-item">
+      <div class="chat-box">
+        <p class="name">Levi</p>
+        <p class="message">How do you do?</p>
+      </div>
+    </li>
+    <li class="chat-item">
+      <div class="chat-box">
+        <p class="name">Levi</p>
+        <p class="message">How do you do?</p>
+      </div>
+    </li>
+    <li class="chat-item">
+      <div class="chat-box">
+        <p class="name">Levi</p>
+        <p class="message">How do you do?</p>
+      </div>
+    </li>
+    <li class="chat-item">
+      <div class="chat-box">
+        <p class="name">Levi</p>
+        <p class="message">How do you do?</p>
+      </div>
+    </li>
+  </ul>
   <footer>
-    <div contenteditable="true" class="text-area" bind:innerHTML={message} />
+    <ChatBar />
   </footer>
 </main>
 
 <style>
   main {
     width: 75%;
-    height: 100vh;
+    height: 100%;
     margin-left: 25%;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .profile-img {
     width: 4.5rem;
@@ -35,19 +67,26 @@
     align-self: center;
   }
   header {
+    position: absolute;
+    height: 6.3rem;
+    width: 100%;
+    background-color: var(--bg-color-3);
+    color: var(--font-color-1);
     padding: 0 1.2rem;
     border-left: 1px solid rgb(93, 93, 93);
     display: flex;
     align-items: center;
   }
-  .chat-name {
+  .recipient-name {
     margin-left: 1rem;
+    font-weight: 300;
   }
   .chat-list {
+    flex: 1;
     padding-top: 6.3rem;
-    height: 100%;
+    overflow: auto;
   }
-  .chat-box-container {
+  .chat-item {
     padding: 1.2rem;
     display: flex;
   }
@@ -62,24 +101,5 @@
   }
   .chat-box .message {
     margin: 5px 0;
-  }
-  footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--bg-color-3);
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-    align-items: center;
-  }
-  .text-area {
-    color: inherit;
-    padding: 1rem 2rem;
-    background-color: var(--bg-color-2);
-    border: none;
-    width: 100%;
-    /* overflow: auto; */
-    border-radius: 20px;
   }
 </style>
