@@ -1,52 +1,61 @@
 <script>
+  import ThemeToggler from '../_components/ThemeToggler.svelte';
+  import ChatList from '../_components/ChatList.svelte';
   import ChatBar from '../_components/ChatBar.svelte';
+  import ProfileImage from '../_components/ProfileImage.svelte';
+  import { query, mutate } from '../../utils/apolloUtils.js';
+  import { GET_MSGS, SEND_MSG } from '../../queries.js';
+  import { NEW_MSG } from '../../queries.js';
+
+  const chatPromise = query(GET_MSGS);
+  let messages;
+
+  $: $chatPromise.then(res => (messages = res.data.messages));
+
+  chatPromise.subscribeToMore({
+    document: NEW_MSG,
+    updateQuery: (prev, { subscriptionData }) => {
+      if (!subscriptionData.data) return prev;
+      const newMessage = subscriptionData.data.messageAdded;
+      prev.messages.push(subscriptionData.data.messageAdded);
+      return {
+        ...prev
+      };
+    }
+  });
+
+  const handleSend = async ({ detail: { message } }) => {
+    if (message.length) {
+      const res = await mutate(SEND_MSG, {
+        variables: {
+          input: {
+            message
+          }
+        },
+        update(cache, { data: { addMessage } }) {
+          const { messages } = cache.readQuery({ query: GET_MSGS });
+          messages.push(addMessage);
+          cache.writeQuery({
+            query: GET_MSGS,
+            data: {
+              messages
+            }
+          });
+        }
+      });
+    }
+  };
 </script>
 
 <main>
   <header>
-    <div class="profile-img" />
+    <ProfileImage />
     <p class="recipient-name">Chattly</p>
+    <ThemeToggler />
   </header>
-  <ul class="chat-list">
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-    <li class="chat-item">
-      <div class="chat-box">
-        <p class="name">Levi</p>
-        <p class="message">How do you do?</p>
-      </div>
-    </li>
-  </ul>
+  <ChatList {messages} />
   <footer>
-    <ChatBar />
+    <ChatBar on:send={handleSend} />
   </footer>
 </main>
 
@@ -59,47 +68,19 @@
     display: flex;
     flex-direction: column;
   }
-  .profile-img {
-    width: 4.5rem;
-    height: 4.5rem;
-    border-radius: 50%;
-    background-color: gray;
-    align-self: center;
-  }
   header {
     position: absolute;
-    height: 6.3rem;
+    height: 9vh;
     width: 100%;
-    background-color: var(--bg-color-3);
+    background-color: var(--bg-color-4);
     color: var(--font-color-1);
     padding: 0 1.2rem;
-    border-left: 1px solid rgb(93, 93, 93);
     display: flex;
     align-items: center;
   }
   .recipient-name {
     margin-left: 1rem;
+    margin-right: auto;
     font-weight: 300;
-  }
-  .chat-list {
-    flex: 1;
-    padding-top: 6.3rem;
-    overflow: auto;
-  }
-  .chat-item {
-    padding: 1.2rem;
-    display: flex;
-  }
-  .chat-box {
-    background-color: var(--main-color);
-    padding: 5px;
-    border-radius: 3px;
-    color: #fff;
-  }
-  .chat-box .name {
-    font-size: 1.2rem;
-  }
-  .chat-box .message {
-    margin: 5px 0;
   }
 </style>

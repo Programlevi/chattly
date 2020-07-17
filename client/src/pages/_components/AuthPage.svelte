@@ -35,7 +35,6 @@
     background-color: var(--bg-color-1);
     width: 55rem;
     padding: 5rem 7rem;
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 2.5rem 8rem 2rem;
   }
 
   p {
@@ -70,7 +69,7 @@
   }
 
   main :global(button) {
-    color: #fff;
+    color: var(--font-color-1);
     padding: 1.4rem 3rem;
     font-weight: 400;
     font-size: 1.6rem;
@@ -85,6 +84,6 @@
 
   main :global(button:hover),
   main :global(button:active) {
-    box-shadow: rgba(0, 0, 0, 0.149) 0px 0.5rem 1rem;
+    background-color: var(--main-color-dark);
   }
 </style>

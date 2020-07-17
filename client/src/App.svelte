@@ -1,15 +1,63 @@
 <script>
   import 'emoji-picker-element';
-  import ApolloClient from 'apollo-boost';
-  import { setClient } from 'svelte-apollo';
+  import { onMount } from 'svelte';
   import { Router } from '@sveltech/routify';
   import { routes } from '@sveltech/routify/tmp/routes';
+  import ApolloClient from 'apollo-client';
+  import { setClient } from 'svelte-apollo';
+  import { split } from 'apollo-link';
+  import { HttpLink } from 'apollo-link-http';
+  import { WebSocketLink } from 'apollo-link-ws';
+  import { SubscriptionClient } from 'subscriptions-transport-ws';
+  import { getMainDefinition } from 'apollo-utilities';
+  import { InMemoryCache } from 'apollo-cache-inmemory';
 
-  const client = new ApolloClient({
+  import { AUTH_USER } from './queries.js';
+
+  // Create an http link:
+  const cache = new InMemoryCache();
+
+  const httpLink = new HttpLink({
     uri: 'http://localhost:3000/graphql',
     credentials: 'include'
   });
+
+  export const wsClient = new SubscriptionClient(
+    'ws://localhost:3000/graphql',
+    {
+      lazy: true,
+      reconnect: true,
+      connectionParams() {
+        return { token: cache.readQuery({ query: AUTH_USER }).auth.token };
+      }
+    }
+  );
+
+  const wsLink = new WebSocketLink(wsClient);
+
+  const link = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    wsLink,
+    httpLink
+  );
+
+  const client = new ApolloClient({
+    link,
+    cache
+  });
   setClient(client);
+
+  onMount(() => {
+    const { classList } = document.querySelector('html');
+    classList.remove(localStorage.theme === 'dark' ? 'light' : 'dark');
+    classList.add(localStorage.theme);
+  });
 </script>
 
 <svelte:head>

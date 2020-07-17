@@ -11,13 +11,6 @@ const dataLoaders = require('./graphql/dataLoaders');
 
 const app = express();
 
-// app.use(
-//   cors({
-//     origin: 'http://localhost:5000',
-//     credentials: true
-//   })
-// );
-
 app.enable('trust proxy');
 
 app.use(cookieParser());
@@ -29,7 +22,6 @@ const apolloServer = new ApolloServer({
     onConnect: async connectionParams => {
       const user = await userService.verifyUser(connectionParams.token);
       if (!user) {
-        console.log(user);
         throw new AuthenticationError('Please login again');
       }
       return {

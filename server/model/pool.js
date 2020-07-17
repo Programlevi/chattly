@@ -22,7 +22,7 @@ const pool = createPool(process.env.DATABASE_URL);
 
     await transactionConnection.query(sql`CREATE TABLE IF NOT EXISTS "message" (
             "id" UUID PRIMARY KEY DEFAULT UUID_GENERATE_V4(),
-            "message" VARCHAR(50) NOT NULL,
+            "message" TEXT NOT NULL,
             "author" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
             "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
             UNIQUE("createdAt")

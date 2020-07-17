@@ -1,18 +1,28 @@
-:root {
+html {
+  --main-color-light: #259bf0;
   --main-color: #108be3;
+  --main-color-dark: #0e78c3;
 
   --bg-color-1: #fff;
-  --bg-color-2: #f7f7f7;
-  --bg-color-3: #444;
+  /* --bg-color-2: #f7f7f7; */
+  --bg-color-2: #efefef;
+  --bg-color-3: #4c4c4c;
+  --bg-color-4: #444;
 
   --font-color-1: #fff;
-  --font-color-2: #777;
-}
-
-html {
+  --font-color-2: #666;
   font-size: 62.5%;
   box-sizing: border-box;
   height: 100vh;
+}
+
+html.dark {
+  --bg-color-1: #2b2b2b;
+  --bg-color-2: #1b1b1b;
+  --bg-color-3: #080808;
+  --bg-color-4: #000;
+
+  --font-color-2: #f6f6f6;
 }
 
 body {

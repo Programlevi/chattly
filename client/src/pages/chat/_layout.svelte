@@ -1,6 +1,7 @@
 <script>
   import { goto } from '@sveltech/routify';
   import OnlineUsers from '../_components/OnlineUsers.svelte';
+  import { subscribe } from '../../utils/apolloUtils.js';
 
   export let scoped;
 
@@ -22,15 +23,14 @@
 
 <style>
   aside {
-    position: fixed;
+    position: absolute;
     width: 25%;
     height: 100vh;
     background-color: var(--bg-color-1);
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 2.5rem 2rem;
   }
   header {
-    position: absolute;
-    height: 6.3rem;
+    position: fixed;
+    height: 9vh;
     width: 100%;
     background-color: var(--bg-color-3);
     color: var(--font-color-1);

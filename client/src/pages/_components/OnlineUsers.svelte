@@ -1,13 +1,14 @@
 <script>
+  import ProfileImage from './ProfileImage.svelte';
   let array = new Array(5);
 </script>
 
 <ul class="list">
   {#each array as arr}
     <li class="user-item">
-      <div class="profile-img" />
+      <ProfileImage />
       <div class="details">
-        <p class="user-name">Charlie Hunam</p>
+        <p class="user-name">rainlife</p>
       </div>
     </li>
   {/each}
@@ -15,8 +16,9 @@
 
 <style>
   .list {
-    margin-top: 6.3rem;
+    margin-top: 9vh;
     padding: 0rem 1rem;
+    max-height: 91vh;
   }
   .user-item {
     display: flex;
@@ -28,13 +30,11 @@
     align-items: center;
     border-bottom: 1px solid var(--bg-color-2);
   }
-  .profile-img {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    background-color: gray;
+
+  .user-item :global(.profile-img) {
     align-self: center;
   }
+
   .user-name {
     margin-left: 5px;
   }
