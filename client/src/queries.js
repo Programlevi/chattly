@@ -51,6 +51,12 @@ export const LOGIN_USER = gql`
   ${authParts}
 `;
 
+export const LOGOUT = gql`
+  mutation {
+    logout
+  }
+`;
+
 export const SEND_MSG = gql`
   mutation($input: AddMessageInput!) {
     addMessage(input: $input) {

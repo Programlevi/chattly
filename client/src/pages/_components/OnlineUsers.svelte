@@ -7,7 +7,7 @@
   let onlineUsers = [];
 
   let promise = query(GET_ONLINE_USERS, {
-    pollInterval: 10000,
+    pollInterval: 5000,
     fetchPolicy: 'cache-and-network'
   });
 

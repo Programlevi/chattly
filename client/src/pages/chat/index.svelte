@@ -7,7 +7,7 @@
   const chatPromise = query(GET_MSGS);
   let messages;
 
-  $: $chatPromise.then(res => (messages = res.data.messages));
+  $: $chatPromise.then((res) => (messages = res.data.messages));
 
   chatPromise.subscribeToMore({
     document: NEW_MSG,
@@ -45,4 +45,4 @@
   };
 </script>
 
-<ChatInterface on:send={handleSend} {messages} chatName="Chattly" imgSrc />
+<ChatInterface on:send={handleSend} {messages} chatName="Chattly" />

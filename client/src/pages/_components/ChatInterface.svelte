@@ -41,5 +41,6 @@
     margin-left: 1rem;
     margin-right: auto;
     font-weight: 300;
+    font-size: 2.25rem;
   }
 </style>

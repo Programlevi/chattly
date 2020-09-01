@@ -13,7 +13,6 @@
     <p>
       <slot name="altAuthLink" />
     </p>
-
   </div>
 </main>
 
@@ -85,5 +84,12 @@
   main :global(button:hover),
   main :global(button:active) {
     background-color: var(--main-color-dark);
+  }
+
+  main :global(.error) {
+    color: red;
+    padding: 1rem;
+    border: 1px solid red;
+    margin-bottom: 1rem;
   }
 </style>

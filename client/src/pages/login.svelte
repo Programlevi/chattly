@@ -8,22 +8,27 @@
     userName: '',
     password: ''
   };
+  let err;
 
   async function handleSubmit() {
-    await mutate(LOGIN_USER, {
-      variables: {
-        input: loginDetails
-      },
-      update(cache, { data: { login } }) {
-        cache.writeQuery({
-          query: AUTH_USER,
-          data: {
-            auth: login
-          }
-        });
-      }
-    });
-    $goto('../chat');
+    try {
+      await mutate(LOGIN_USER, {
+        variables: {
+          input: loginDetails
+        },
+        update(cache, { data: { login } }) {
+          cache.writeQuery({
+            query: AUTH_USER,
+            data: {
+              auth: login
+            }
+          });
+        }
+      });
+      $goto('../chat');
+    } catch (error) {
+      err = error;
+    }
   }
 </script>
 
@@ -35,6 +40,9 @@
   <span slot="heading">Log in to your account</span>
 
   <form on:submit|preventDefault={handleSubmit} slot="form">
+    {#if err}
+      <p class="error">Username or password incorrect</p>
+    {/if}
     <div class="form-field">
       <label for="userName">Username</label>
       <input

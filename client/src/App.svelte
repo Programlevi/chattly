@@ -18,12 +18,12 @@
   const cache = new InMemoryCache();
 
   const httpLink = new HttpLink({
-    uri: 'http://localhost:3000/graphql',
+    uri: 'https://chattlyserver.herokuapp.com/graphql',
     credentials: 'include'
   });
 
   export const wsClient = new SubscriptionClient(
-    'ws://localhost:3000/graphql',
+    'ws://chattlyserver.herokuapp.com/graphql',
     {
       lazy: true,
       reconnect: true,

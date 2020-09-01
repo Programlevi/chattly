@@ -9,21 +9,27 @@
     password: ''
   };
 
+  let err;
+
   async function signup() {
-    await mutate(SIGNUP_USER, {
-      variables: {
-        input: signupDetails
-      },
-      update(cache, { data: { signup } }) {
-        cache.writeQuery({
-          query: AUTH_USER,
-          data: {
-            auth: signup
-          }
-        });
-      }
-    });
-    $goto('../chat');
+    try {
+      await mutate(SIGNUP_USER, {
+        variables: {
+          input: signupDetails
+        },
+        update(cache, { data: { signup } }) {
+          cache.writeQuery({
+            query: AUTH_USER,
+            data: {
+              auth: signup
+            }
+          });
+        }
+      });
+      $goto('../chat');
+    } catch (error) {
+      err = error;
+    }
   }
 </script>
 
@@ -35,6 +41,9 @@
   <span slot="heading">Create a new account</span>
 
   <form on:submit|preventDefault={signup} slot="form">
+    {#if err}
+      <p class="error">Username already exists, please use another one.</p>
+    {/if}
     <div class="form-field">
       <label for="userName">Username</label>
       <input
