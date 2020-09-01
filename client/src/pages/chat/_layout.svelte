@@ -1,13 +1,24 @@
 <script>
+  import { onMount } from 'svelte';
   import { goto } from '@sveltech/routify';
   import OnlineUsers from '../_components/OnlineUsers.svelte';
-  import { subscribe } from '../../utils/apolloUtils.js';
+  import { mutate } from '../../utils/apolloUtils.js';
+  import { UPDATE_LAST_SEEN } from '../../queries.js';
 
   export let scoped;
 
   if (!scoped.auth) {
     $goto('../login');
   }
+
+  onMount(() => {
+    const interval = setInterval(() => {
+      mutate(UPDATE_LAST_SEEN).then();
+    }, 3000);
+    return () => {
+      clearInterval(interval);
+    };
+  });
 </script>
 
 <svelte:head>

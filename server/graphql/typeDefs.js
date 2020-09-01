@@ -4,8 +4,6 @@ module.exports = gql`
   type User {
     id: ID!
     userName: String!
-    email: String!
-    photo: String!
     createdAt: String!
   }
 
@@ -18,14 +16,9 @@ module.exports = gql`
     id: ID!
     message: String!
     author: User!
+    recipient: String
+    type: MessageTypeEnum!
     createdAt: String!
-  }
-
-  input FilterUserInput {
-    id: ID
-    userName: String
-    email: String
-    createdAt: String
   }
 
   input FilterMessageInput {
@@ -37,25 +30,47 @@ module.exports = gql`
 
   input SignupUserInput {
     userName: String!
-    email: String!
     password: String!
   }
 
   input LoginUserInput {
     userName: String
-    email: String
     password: String!
+  }
+
+  input UpdateUserInput {
+    userName: String
+    lastSeen: String
   }
 
   input AddMessageInput {
     message: String!
+    reciepient: String
+    type: MessageTypeEnum!
+  }
+
+  input QueryOptionsInput {
+    page: Int!
+    limit: Int!
+    orderBy: [String]!
+  }
+
+  enum StatusEnum {
+    SUCCESS
+    FAILED
+  }
+
+  enum MessageTypeEnum {
+    PRIVATE
+    GROUP
   }
 
   type Query {
-    user(input: FilterUserInput!): User
-    users(input: FilterUserInput): [User]!
-    message(input: FilterMessageInput!): Message
-    messages(input: FilterMessageInput): [Message]!
+    onlineUsers: [User]!
+    messages(
+      input: FilterMessageInput
+      queryOptions: QueryOptionsInput
+    ): [Message]!
     auth: UserAuth
   }
 
@@ -63,6 +78,7 @@ module.exports = gql`
     signup(input: SignupUserInput!): UserAuth!
     login(input: LoginUserInput!): UserAuth!
     logout: String!
+    updateLastSeen: StatusEnum!
     addMessage(input: AddMessageInput!): Message!
   }
 

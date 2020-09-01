@@ -14,12 +14,11 @@ exports.signup = async newUser => {
 };
 
 exports.login = async userCred => {
-  const { password, email, userName } = userCred;
-  const user = email
-    ? await userModel.findOne({ email })
-    : await userModel.findOne({ userName });
+  const { password, userName } = userCred;
+  const user = await userModel.findOne({ userName });
+
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new AuthenticationError('Username/Email or Password incorrect');
+    throw new AuthenticationError('Username or Password incorrect');
   }
   const token = signjwt(user.id);
   return {

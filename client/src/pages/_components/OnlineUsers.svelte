@@ -1,41 +1,58 @@
 <script>
+  import { url } from '@sveltech/routify';
   import ProfileImage from './ProfileImage.svelte';
-  let array = new Array(5);
+  import { query } from '../../utils/apolloUtils.js';
+  import { GET_ONLINE_USERS } from '../../queries.js';
+
+  let onlineUsers = [];
+
+  let promise = query(GET_ONLINE_USERS, {
+    pollInterval: 10000,
+    fetchPolicy: 'cache-and-network'
+  });
+
+  $: $promise.then((res) => {
+    if (res.networkStatus === 7) {
+      onlineUsers = res.data.onlineUsers;
+    }
+  });
 </script>
 
 <ul class="list">
-  {#each array as arr}
+  {#each onlineUsers as user}
     <li class="user-item">
-      <ProfileImage />
-      <div class="details">
-        <p class="user-name">rainlife</p>
-      </div>
+      <a href={$url('./:privateId', { privateId: user.id })} class="user-link">
+        <ProfileImage />
+        <div class="details">
+          <p class="user-name">{user.userName}</p>
+        </div>
+      </a>
     </li>
+  {:else}
+    <p>Its a little quiet here today</p>
   {/each}
 </ul>
 
 <style>
   .list {
     margin-top: 9vh;
-    padding: 0rem 1rem;
-    max-height: 91vh;
-  }
-  .user-item {
+    list-style: none;
+    padding: 1rem;
     display: flex;
-    height: 7rem;
+    flex-direction: column;
+    max-width: 100%;
+    overflow: auto;
   }
-  .details {
-    flex: 1;
+  .user-link {
+    color: var(--font-color-2);
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--bg-color-2);
+    padding-bottom: 1rem;
   }
-
-  .user-item :global(.profile-img) {
-    align-self: center;
-  }
-
   .user-name {
-    margin-left: 5px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-left: 1rem;
   }
 </style>

@@ -1,6 +1,5 @@
 const { sql } = require('slonik');
 const pool = require('../pool');
-const isObject = require('../../utils/isObject');
 
 class Entity {
   constructor(tableName, columns) {
@@ -8,17 +7,22 @@ class Entity {
     this.columns = columns;
   }
 
-  async find(condition = true) {
-    if (!isObject(condition) && condition !== true)
-      throw new Error(
-        'Invalid input: condition must be object or undefined and cannot be null'
-      );
+  defaultQueryOptions = {
+    page: 1,
+    limit: 50,
+    orderBy: ['createdAt']
+  };
 
+  async find(condition = true, queryOptions = this.defaultQueryOptions) {
     if (typeof condition !== 'boolean')
       condition = this._generateColumnValuePairs(condition, sql` AND `);
+    const paginate = this._paginate(queryOptions.page, queryOptions.limit);
+    const orderBy = this._orderBy(queryOptions.orderBy);
 
     const res = await pool.query(
-      sql`SELECT * FROM ${sql.identifier([this.tableName])} WHERE ${condition}`
+      sql`SELECT * FROM ${sql.identifier([
+        this.tableName
+      ])} WHERE ${condition} ${orderBy} ${paginate}`
     );
     return res.rows;
   }
@@ -36,18 +40,11 @@ class Entity {
   }
 
   async findOne(condition) {
-    if (!isObject(condition))
-      throw new Error(
-        'Invalid input: condition must be object and cannot be null'
-      );
     const res = await this.find(condition);
     return res[0] ? res[0] : null;
   }
 
   async add(records) {
-    if (!Array.isArray(records))
-      throw new Error('Invalid input: must be an array of records');
-
     const columns = this._generateColumns();
     const values = this._generateValues(records);
 
@@ -61,21 +58,11 @@ class Entity {
   }
 
   async addOne(record) {
-    if (!isObject(record))
-      throw new Error(
-        'Invalid input: condition must be object and cannot be null'
-      );
     const res = await this.add([record]);
     return res[0] ? res[0] : null;
   }
 
   async update(data, condition = true) {
-    if (!isObject(data)) throw new Error('Invalid input: data must be object');
-    if (!isObject(condition) && condition !== true)
-      throw new Error(
-        'Invalid input: condition must be object or undefined and cannot be null'
-      );
-
     if (typeof condition !== 'boolean')
       condition = this._generateColumnValuePairs(condition, sql` AND `);
 
@@ -87,26 +74,15 @@ class Entity {
       ])} SET ${updates} WHERE ${condition} RETURNING *`
     );
 
-    console.log(res.rows);
     return res.rows;
   }
 
   async updateOne(data, condition) {
-    if (!isObject(data)) throw new Error('Invalid input: data must be object');
-    if (!isObject(condition))
-      throw new Error(
-        'Invalid input: condition must be object and cannot be null'
-      );
     const res = await this.update(data, condition);
     return res[0] ? res[0] : null;
   }
 
   async delete(condition = true) {
-    if (!isObject(condition) && condition !== true) {
-      throw new Error(
-        'Invalid input: condition must be object or undefined and cannot be null'
-      );
-    }
     if (typeof condition !== 'boolean') {
       condition = this._generateColumnValuePairs(condition, sql` AND `);
     }
@@ -120,11 +96,6 @@ class Entity {
   }
 
   async count(condition = true) {
-    if (!isObject(condition) && condition !== true)
-      throw new Error(
-        'Invalid input: condition must be object or undefined and cannot be null'
-      );
-
     if (typeof condition !== 'boolean')
       condition = this._generateColumnValuePairs(condition, sql` AND `);
 
@@ -138,10 +109,6 @@ class Entity {
   }
 
   async deleteOne(condition) {
-    if (!isObject(condition))
-      throw new Error(
-        'Invalid input: condition must be object and cannot be null'
-      );
     const res = await this.delete(condition);
     return res[0] ? res[0] : null;
   }
@@ -175,6 +142,25 @@ class Entity {
         )})`
     );
     return sql.join(sqlArray, sql`, `);
+  }
+
+  _paginate(page, limit) {
+    const offset = (page - 1) * limit;
+    return sql`OFFSET ${offset} limit ${limit}`;
+  }
+
+  _orderBy(columnNames) {
+    return sql`ORDER BY ${sql.join(
+      columnNames.map(col => sql.identifier([col])),
+      sql`, `
+    )}`;
+  }
+
+  _distinct(columnNames) {
+    return sql`DISTINCT ON (${sql.join(
+      columnNames.map(col => sql.identifier([col])),
+      sql`, `
+    )})`;
   }
 }
 

@@ -1,7 +1,4 @@
-const {
-  AuthenticationError,
-  ForbiddenError
-} = require('apollo-server-express');
+const { AuthenticationError } = require('apollo-server-express');
 
 exports.authenticate = (parent, args, context) => {
   if (!context.user) {

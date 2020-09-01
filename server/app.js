@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-// const cors = require('cors');
+const cors = require('cors');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 
 const typeDefs = require('./graphql/typeDefs');
@@ -12,6 +12,9 @@ const dataLoaders = require('./graphql/dataLoaders');
 const app = express();
 
 app.enable('trust proxy');
+
+// app.use(cors());
+// app.options('*', cors());
 
 app.use(cookieParser());
 
@@ -44,6 +47,10 @@ const apolloServer = new ApolloServer({
     }
 
     return context;
+  },
+  formatError(err) {
+    console.log(err.extensions);
+    return err;
   }
 });
 

@@ -21,6 +21,7 @@
     "graphql": "^15.1.0",
     "graphql-resolvers": "^0.4.2",
     "jsonwebtoken": "^8.5.1",
+    "sharp": "^0.25.4",
     "slonik": "^22.4.11"
   },
   "devDependencies": {

@@ -5,7 +5,7 @@
   import { LOGIN_USER, AUTH_USER } from '../queries.js';
 
   let loginDetails = {
-    email: '',
+    userName: '',
     password: ''
   };
 
@@ -35,16 +35,15 @@
   <span slot="heading">Log in to your account</span>
 
   <form on:submit|preventDefault={handleSubmit} slot="form">
-
     <div class="form-field">
-      <label for="email">Email Address</label>
+      <label for="userName">Username</label>
       <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="doe@gmail.com"
+        type="text"
+        id="userName"
+        name="userName"
+        placeholder="Ex: bond007"
         autocomplete="off"
-        bind:value={loginDetails.email}
+        bind:value={loginDetails.userName}
       />
     </div>
 
@@ -60,11 +59,9 @@
     </div>
 
     <button>Log in</button>
-
   </form>
 
   <span slot="altAuthLink">
-    Don't have an account?
-    <a href={$url('../signup')}>Sign up here</a>
+    Don't have an account? <a href={$url('../signup')}>Sign up here</a>
   </span>
 </AuthPage>

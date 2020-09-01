@@ -6,7 +6,6 @@
 
   let signupDetails = {
     userName: '',
-    email: '',
     password: ''
   };
 
@@ -42,21 +41,9 @@
         type="text"
         id="userName"
         name="userName"
-        placeholder="bond007"
+        placeholder="Ex: bond007"
         autocomplete="off"
         bind:value={signupDetails.userName}
-      />
-    </div>
-
-    <div class="form-field">
-      <label for="email">Email Address</label>
-      <input
-        type="eamil"
-        id="email"
-        name="email"
-        placeholder="bassey08@gmail.com"
-        autocomplete="off"
-        bind:value={signupDetails.email}
       />
     </div>
 
@@ -72,11 +59,9 @@
     </div>
 
     <button>Sign Up</button>
-
   </form>
 
   <span slot="altAuthLink">
-    Already have an account?
-    <a href={$url('../login')}>Log in here</a>
+    Already have an account? <a href={$url('../login')}>Log in here</a>
   </span>
 </AuthPage>

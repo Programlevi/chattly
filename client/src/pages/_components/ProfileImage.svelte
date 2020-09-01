@@ -2,9 +2,7 @@
   let src;
 </script>
 
-<div class="profile-img">
-  <img src="/user-9.jpg" alt="Johnnys profile" />
-</div>
+<div class="profile-img"><img src="/avatar.png" alt="Johnnys profile" /></div>
 
 <style>
   div {
