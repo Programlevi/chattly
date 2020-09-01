@@ -2,5 +2,6 @@
 /dist/
 .DS_Store
 **/.history
+/src/pages/example
 
 other.txt
