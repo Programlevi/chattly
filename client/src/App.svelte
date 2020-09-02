@@ -23,7 +23,7 @@
   });
 
   export const wsClient = new SubscriptionClient(
-    'ws://chattlyserver.herokuapp.com/graphql',
+    'wss://chattlyserver.herokuapp.com/graphql',
     {
       lazy: true,
       reconnect: true,
