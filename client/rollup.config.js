@@ -12,10 +12,7 @@ const distDir = 'dist';
 const buildDir = `${distDir}/build`;
 const production = !process.env.ROLLUP_WATCH;
 const bundling = process.env.BUNDLING || production ? 'dynamic' : 'bundle';
-const shouldPrerender =
-  typeof process.env.PRERENDER !== 'undefined'
-    ? process.env.PRERENDER
-    : !!production;
+const shouldPrerender = false;
 
 del.sync(distDir + '/**');
 
@@ -51,7 +48,7 @@ function createConfig({ output, inlineDynamicImports, plugins = [] }) {
         hydratable: true,
         // we'll extract any component CSS out into
         // a separate file — better for performance
-        css: css => {
+        css: (css) => {
           css.write(`${buildDir}/bundle.css`);
         }
       }),
@@ -63,7 +60,7 @@ function createConfig({ output, inlineDynamicImports, plugins = [] }) {
       // https://github.com/rollup/rollup-plugin-commonjs
       resolve({
         browser: true,
-        dedupe: importee =>
+        dedupe: (importee) =>
           importee === 'svelte' || importee.startsWith('svelte/')
       }),
       commonjs(),
