@@ -23,7 +23,9 @@
     {#if author.id !== user.id}
       <p class="name">{author.userName}</p>
     {/if}
-    <p class="message">{message}</p>
+    <p class="message">
+      {@html message}
+    </p>
   </div>
 </li>
 

@@ -55,7 +55,7 @@
 
   onMount(() => {
     const { classList } = document.querySelector('html');
-    classList.remove(localStorage.theme === 'dark' ? 'light' : 'dark');
+    classList.remove(localStorage.theme === 'light' ? 'dark' : 'light');
     classList.add(localStorage.theme);
   });
 </script>

@@ -17,7 +17,7 @@
 
 <ul class="chat-list" bind:this={ul}>
   {#if messages}
-    {#each messages as message (message.id)}
+    {#each messages as message}
       <ChatItem {message} />
     {/each}
   {/if}

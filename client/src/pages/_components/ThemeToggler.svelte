@@ -2,7 +2,7 @@
   // preserve the focus ring for keyboard users because a11y,
   // but hide for mouse users because fugly
   let nice = false;
-  let theme = 'light';
+  let theme = 'dark';
   try {
     theme = localStorage.theme;
   } catch (e) {
@@ -11,7 +11,7 @@
   const toggle = () => {
     const { classList } = document.querySelector('html');
     classList.remove(theme);
-    theme = theme === 'light' ? 'dark' : 'light';
+    theme = theme === 'dark' ? 'light' : 'dark';
     classList.add(theme);
     try {
       localStorage.theme = theme;

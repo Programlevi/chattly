@@ -16,7 +16,7 @@ html {
   height: 100vh;
 }
 
-html.dark {
+html.light {
   --bg-color-1: #fff;
   --bg-color-2: #efefef;
   --bg-color-3: #4c4c4c;
