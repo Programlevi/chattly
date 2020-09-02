@@ -24,8 +24,7 @@ const pool = createPool(process.env.DATABASE_URL);
             "author" UUID NOT NULL REFERENCES "userAccount"(id) ON DELETE CASCADE,
             "recipient" UUID,
             "type" varchar(7) NOT NULL,
-            "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE("createdAt")
+            "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
         );`);
   });
 })();
