@@ -1,17 +1,17 @@
-const http = require('http');
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const { ApolloServer, AuthenticationError } = require('apollo-server-express');
+const http = require("http");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const { ApolloServer, AuthenticationError } = require("apollo-server-express");
 
-const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers');
-const userService = require('./services/userService');
-const dataLoaders = require('./graphql/dataLoaders');
+const typeDefs = require("./graphql/typeDefs");
+const resolvers = require("./graphql/resolvers");
+const userService = require("./services/userService");
+const dataLoaders = require("./graphql/dataLoaders");
 
 const app = express();
 
-app.enable('trust proxy');
+app.enable("trust proxy");
 
 // app.use(cors());
 // app.options('*', cors());
@@ -25,18 +25,18 @@ const apolloServer = new ApolloServer({
     onConnect: async connectionParams => {
       const user = await userService.verifyUser(connectionParams.token);
       if (!user) {
-        throw new AuthenticationError('Please login again');
+        throw new AuthenticationError("Please login again");
       }
       return {
-        user
+        user,
       };
-    }
+    },
   },
   context: async ({ req, res, connection }) => {
     let context = {
       loaders: {
-        messageAuthorLoader: dataLoaders.messageAuthorLoader()
-      }
+        messageAuthorLoader: dataLoaders.messageAuthorLoader(),
+      },
     };
 
     if (connection) {
@@ -51,15 +51,15 @@ const apolloServer = new ApolloServer({
   formatError(err) {
     console.log(err.extensions);
     return err;
-  }
+  },
 });
 
 apolloServer.applyMiddleware({
   app,
   cors: {
     credentials: true,
-    origin: true
-  }
+    origin: "https://chattly.netlify.app/",
+  },
 });
 
 const httpServer = http.createServer(app);
