@@ -6,7 +6,7 @@ const { ApolloServer, AuthenticationError } = require("apollo-server-express");
 
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
-const userService = require("./services/userService");
+const userService = require("./Services/userService");
 const dataLoaders = require("./graphql/dataLoaders");
 
 const app = express();
